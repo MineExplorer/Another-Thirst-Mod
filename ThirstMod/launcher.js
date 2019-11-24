@@ -1,0 +1,3 @@
+Launch({
+	MobEffect: Native.PotionEffect
+});
