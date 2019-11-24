@@ -12,9 +12,8 @@ BUILD INFO:
 IMPORT("ScalesRPG");
 
 let BitmapFactory = android.graphics.BitmapFactory;
-
 let thirstScale = new ScalesRPG.Scale({
-	right: true,
+	right: __config__.getBool("right_bar_position"),
     bitmaps:{
         full: BitmapFactory.decodeFile(__dir__ + "gui/scale_water_0.png"), 
         half: BitmapFactory.decodeFile(__dir__ + "gui/scale_water_1.png"),

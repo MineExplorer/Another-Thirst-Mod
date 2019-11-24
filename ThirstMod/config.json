@@ -1,3 +1,4 @@
 {
-  "enabled":true
+  "enabled":true,
+  "right_bar_position":true
 }
