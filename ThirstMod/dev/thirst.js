@@ -9,7 +9,8 @@ Callback.addCallback("tick", function(){
 	// check the sun
 	let pos = Player.getPosition();
 	if(World.getThreadTime()%20 == 0 && HOT_BIOMES.indexOf(World.getBiome(pos.x, pos.y, pos.z)) != -1){
-		isInTheSun = World.getLightLevel(pos.x, pos.y, pos.z) == 15;
+		let time = World.getWorldTime()%24000;
+		isInTheSun = (time >= 0 && time <= 12000 && World.getLightLevel(pos.x, pos.y, pos.z) == 15);
 	}
 	if(isInTheSun){
 		thirstLevel += 2;
