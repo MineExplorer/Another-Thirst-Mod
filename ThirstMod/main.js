@@ -100,23 +100,25 @@ ModAPI.registerAPI("ThirstAPI", ThirstAPI);
 
 IMPORT("EntityState");
 
-let HOT_BIOMES = [2, 8, 35, 36, 37, 38, 39, 135, 164, 165, 166, 167];
+let HOT_BIOMES = [2, 35, 36, 37, 38, 39, 135, 164, 165, 166, 167];
 let isDestroyingBlock = false;
 let isInTheSun = false;
 Callback.addCallback("tick", function(){
 	// if player is alive
 	if(Entity.getHealth(Player.get()) <= 0) return;
-	// check the sun
-	let pos = Player.getPosition();
-	if(World.getThreadTime()%20 == 0 && HOT_BIOMES.indexOf(World.getBiome(pos.x, pos.y, pos.z)) != -1){
+	// check temperature
+	if(World.getThreadTime()%20 == 0){
+		let pos = Player.getPosition();
+		let biome = World.getBiome(pos.x, pos.y, pos.z);
 		let time = World.getWorldTime()%24000;
-		isInTheSun = (time >= 0 && time <= 12000 && World.getLightLevel(pos.x, pos.y, pos.z) == 15);
+		if(biome == 8 || 
+		  HOT_BIOMES.indexOf() != -1 && time <= 12000 && World.getLightLevel(pos.x, pos.y, pos.z) == 15){
+			isInTheSun = true;
+		} else {
+			isInTheSun = false;
+		}
 	}
-	if(isInTheSun){
-		thirstLevel += 2;
-	}else{
-		thirstLevel++;
-	}
+	thirstLevel += isInTheSun? 2 : 1;
 	// check block destroying
 	if(isDestroyingBlock){
 		thirstLevel++;
@@ -126,7 +128,7 @@ Callback.addCallback("tick", function(){
 	let state = EntityState.getPlayerState();
     if(state.checkFlags(EntityState.RUNNING) || state.checkFlags(EntityState.JUMPING)){
         thirstLevel++;
-	}else if(state.checkFlags(EntityState.WALKING) || state.checkFlags(EntityState.SWIMMING) || state.checkFlags(EntityState.FLOATING)){
+	} else if(state.checkFlags(EntityState.WALKING) || state.checkFlags(EntityState.SWIMMING) || state.checkFlags(EntityState.FLOATING)){
         thirstLevel += 0.5;
 	}
 	// decrease water level

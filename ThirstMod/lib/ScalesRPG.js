@@ -61,7 +61,7 @@ runAsUI(function(){
     window.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT));
     window.showAtLocation(ctx.getWindow().getDecorView(), Gravity.LEFT | Gravity.TOP, 0, 0);
 });
-        
+ 
 
 var scales = [];
 
